@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 const version = '0.0.1'; 
 const description = 'A simple CLI application for Dart by MrCoder.';
@@ -33,13 +32,12 @@ void printUsage(){
   print("The following commands are valid: 'description', 'version', 'search <ARTICLE-TITLE>'");
 }
  
- void searchWikipedia(List<String>? args) async {
+ void searchWikipedia(List<String>? args) async { // async for wait the response.
   print("searchWikipedia received arguments : $args");
   final String? articleTitle;
-  
-  if(args==null || args.isEmpty){
+  if(args==null || args.isEmpty){ //if the command doesn't contains an arg
     print("Please provide an Article title: ");
-    final articleTitleFromStdin = stdin.readLineSync() ?? ' ';  
+    final articleTitleFromStdin = stdin.readLineSync() ?? ' ';  // get an argument from user via command line 
     if (articleTitleFromStdin.isEmpty){
       print("No Article title provided, exitting.");
       return;
@@ -66,7 +64,7 @@ Future<String> getWikipediaArticle(String articleTitle) async {
   final response = await http.get(url); // make the http request
 
   if(response.statusCode == 200){
-    stdout.write("Request succesfull");
+    stdout.write("********** Request succesfull********************\n ");
     return  response.body; // return response body if request succesfully
   }else{
     return 'ERROR: An error occured during request : $articleTitle, status code : ${response.statusCode}';

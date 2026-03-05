@@ -1,6 +1,6 @@
 int minOlaniBul(int a, int b) => a < b ? a : b; //fat arrow fonksiyon, tek satırda yazılabilir ve return ifadesi otomatik olarak eklenir
 
-int ciftToplam(int a){
+int ciftToplam(int a){ 
   int toplam = 0;
   for (int i = 0; i <= a; i++) {
     if (i % 2 == 0) { 

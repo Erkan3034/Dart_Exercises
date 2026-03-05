@@ -8,7 +8,8 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
-  path: ^1.9.0
+  path: ^1.9.0  
+  http: ^1.3.0 #http packet for fetch data from wikipedia
 
 dev_dependencies:
   lints: ^6.0.0

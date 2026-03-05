@@ -1,3 +1,4 @@
+import 'dart:io';
 const version = '0.0.1'; 
 const description = 'A simple CLI application for Dart by MrCoder.';
 void main(List<String> arguments) {
@@ -10,10 +11,12 @@ void main(List<String> arguments) {
   }
   
   else if (arguments.first == 'search') {
-    final inputArgs = arguments.length > 1 ? arguments.sublist(1) : null;
+    final inputArgs = arguments.length > 1 ? arguments.sublist(1) : null; //creates a new list containing all elements of the arguments list after the first element(search)
     searchWikipedia(inputArgs);
-  }
   
+
+      }
+
   else{
     printUsage();
   }
@@ -26,4 +29,16 @@ void printUsage(){
 
  void searchWikipedia(List<String>? args){
   print("searchWikipedia received arguments : $args");
+  final String articleTitle;
+
+  if(args==null || args.isEmpty){
+    print("Please provide an Article title: ");
+
+    articleTitle = stdin.readLineSync() ?? ' ';  
+  }else{
+    articleTitle =args.join(' ');
+  }
+
+  print("Current article titile  : $articleTitle");
+
 }

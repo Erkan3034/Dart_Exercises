@@ -54,7 +54,7 @@ void printUsage(){
 
 }
 
-
+//A Future is like a promise(js). It represents a value that isn't available yet but will be once an asynchronous operation (like a network request) finishes.
 Future<String> getWikipediaArticle(String articleTitle) async {
   final url = Uri.https(
     'en.wikipedia.org', //Wikipedia API domain

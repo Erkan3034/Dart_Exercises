@@ -7,6 +7,7 @@ main(List<String> args) {
   sayilar[2] = 3;
 
   print(sayilar);
+  print(sayi);
   print(sayilar.length);
   print(sayilar[3]);
 

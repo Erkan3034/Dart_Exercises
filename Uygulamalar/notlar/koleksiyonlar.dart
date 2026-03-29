@@ -61,7 +61,7 @@ void main() {
   List<int> sonuc = [...a, ...?c]; // c null ise hata vermez
 
  
- 
+
   // COLLECTION IF / FOR
 
   bool aktif = true;
@@ -80,3 +80,9 @@ void main() {
   print(menu);
   print(ikiKat);
 }
+
+/* 
+List → API’den gelen veriler (ürün listesi vs.)
+Set → benzersiz veri (ID’ler, tag’ler)
+Map → JSON, config, user objeleri 
+*/

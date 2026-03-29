@@ -50,5 +50,3 @@ class Kullanici {
   // required this.xxx → zorunlu alan
   Kullanici({required this.isim, required this.yas});
 }
-
-//eklendi

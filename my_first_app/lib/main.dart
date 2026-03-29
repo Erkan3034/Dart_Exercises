@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
+import 'second_screen.dart';
 
 void main() {
-  String title = "Erkan";
-  String img_url= "https://codenthia-com.onrender.com/static/codenthiaRevize.png";
-  runApp(MaterialApp(
-    theme: ThemeData(
-      primaryColor: Colors.blue,
-    ),
+  runApp(const MyApp());
+}
 
-    home: Scaffold(
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+      ),
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    String title = "Erkan";
+    String img_url= "https://codenthia-com.onrender.com/static/codenthiaRevize.png";
+    
+    return Scaffold(
       backgroundColor: const Color.fromARGB(255, 194, 36, 83),
       appBar: AppBar(
         backgroundColor: Colors.pink,
@@ -48,18 +67,19 @@ void main() {
         )
       ),
 
-      
       floatingActionButton: FloatingActionButton(
         splashColor: Colors.green,
         onPressed: () {
           debugPrint("Floating Action Button Pressed");
-          
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SecondScreen()),
+          );
         },
         child: const Icon(Icons.ads_click, color: Color.fromARGB(255, 197, 72, 72), fontWeight: FontWeight.bold,),
       ),
-  
-    ),
-  ));
+    );
+  }
 }
 
 Container icIceKutulariGoster(String title) {

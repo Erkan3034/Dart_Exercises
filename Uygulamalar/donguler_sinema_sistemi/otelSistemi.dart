@@ -3,7 +3,7 @@ void main(List<String> args) {
   int kattakiOdaSayisi = 2;
 
   for (int kat = 1; kat <= otelKatSayisi; kat++) {
-    print("\nKAT $kat ->");
+    print("\nKAT $kat");
     print("=" * 20);
     
     for (int oda = 1; oda <= kattakiOdaSayisi; oda++) {

@@ -4,7 +4,7 @@ void main(List<String> args){
   double toplamYol = 0.0;
   for (int i=1; i<=4; i++){
     if (i == 2){
-      stdout.write("Mahalle 2'den çıkış yapıldı. Bu mahallede yol çalışması var, diğer mahalleye geçiliyor.");
+      stdout.write("Mahalle 2'den çıkış yapıldı. Bu mahallede yol çalışması var, diğer mahalleye geçiliyor.\n");
       continue;
     }
     toplamYol += 5.5;

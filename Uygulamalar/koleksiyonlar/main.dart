@@ -6,6 +6,15 @@ main(List<String> args) {
   sayilar[1] = 2;
   sayilar[2] = 3;
 
+
+  List<dynamic> karisikListe1 = [1, "Merhaba", 3, "Dart"];
+  for (var eleman in karisikListe1){
+    print(eleman);
+  }
+
+  
+  print("===========KARISIK LISTE (int, String)===========");
+
   print(sayilar);
   print(sayi);
   print(sayilar.length);

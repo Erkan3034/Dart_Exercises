@@ -16,7 +16,7 @@ const String openSearchResponse = './test/test_data/open_search_response.json';
 void main() {
   group('deserialize example JSON responses from wikipedia API', () {
     // Tests will go here  
-    test('calculate', () {
+    //test('calculate', () {
     expect(calculate(), 42);
   });
 

@@ -9,7 +9,7 @@ void main(List<String> arguments) {
         throw error;
       }
       if (error is Exception){
-        print('Error: ${error.toString()}');
+        print({error.toString()});
       }
     },
   )..addCommand(HelpCommand());

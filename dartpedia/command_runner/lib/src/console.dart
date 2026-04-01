@@ -75,7 +75,7 @@ extension TextRenderUtils on String {
           strBuffer.write(' ');
         }
       }
-      // If the next word surpasses length, start the next line
+      //  word surpasses length, start the next line
       if (i + 1 < words.length &&
           words[i + 1].length + strBuffer.length + 1 > length) {
         output.add(strBuffer.toString().trim());

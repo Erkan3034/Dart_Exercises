@@ -58,7 +58,6 @@ enum ConsoleColor {
   
 }
 
-// Add this code to the bottom of the file
 extension TextRenderUtils on String {
   String get errorText => ConsoleColor.red.applyForeground(this);
   String get instructionText => ConsoleColor.yellow.applyForeground(this);
@@ -84,7 +83,6 @@ extension TextRenderUtils on String {
       }
     }
 
-    // Add left overs
     output.add(strBuffer.toString().trim());
     return output;
   }

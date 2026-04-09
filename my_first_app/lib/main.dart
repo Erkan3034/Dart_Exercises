@@ -25,14 +25,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String title = "Erkan";
-    String img_url= "https://codenthia-com.onrender.com/static/codenthiaRevize.png";
+    String imgUrl= "https://codenthia-com.onrender.com/static/codenthiaRevize.png";
     
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 194, 36, 83),
       appBar: AppBar(
         backgroundColor: Colors.pink,
         title: const Text(
-          'My First App',
+          'İlk Uygulamam.',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
               end: Alignment.bottomRight,
             ),
             image: DecorationImage(
-              image: NetworkImage(img_url),
+              image: NetworkImage(imgUrl),
               fit: BoxFit.cover,
             ), 
           ),
@@ -86,7 +86,7 @@ Container icIceKutulariGoster(String title) {
   return Container(
           decoration: BoxDecoration(
             color: const Color.fromARGB(132, 61, 91, 112),
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(15),
           ),
           width: 150,
           height: 50,

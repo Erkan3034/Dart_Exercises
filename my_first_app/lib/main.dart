@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'second_screen.dart';
+import 'package:my_first_app/music_screen.dart';
+import 'package:my_first_app/profile_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -73,11 +74,12 @@ class HomePage extends StatelessWidget {
           debugPrint("Floating Action Button Pressed");
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const SecondScreen()),
+            MaterialPageRoute(builder: (context) => const MusicPlayerPage()),
           );
         },
         child: const Icon(Icons.ads_click, color: Color.fromARGB(255, 197, 72, 72), fontWeight: FontWeight.bold,),
       ),
+      
     );
   }
 }

@@ -1,72 +1,81 @@
 import 'package:flutter/material.dart';
 
 class SecondScreen extends StatelessWidget {
-  const SecondScreen({Key? key}) : super(key: key);
+  const SecondScreen({super.key});
+
+  Widget box(String harf) {
+    return Container(
+      width: 65, 
+      height: 65,
+      margin: const EdgeInsets.all(2),
+      color: Colors.orange,
+      child: Center(
+        child: Text(
+          harf,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+
+Widget kutu(String harff){
+  return Container(
+    width :150,
+    height: 50,
+    margin:EdgeInsets.all(2),
+    color: Colors.amber,
+    child:Center(
+      child:Text(harff,
+      style: const TextStyle(
+        color: Colors.black,
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),)
+    )
+  );
+}
 
   @override
   Widget build(BuildContext context) {
-    final List<String> dartLetters = ['A', 'R', 'T'];
-    final List<String> dersLetters = ['D', 'E', 'R', 'S', 'L', 'E', 'R', 'I'];
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Dersleri'),
-        backgroundColor: Colors.blue,
+        title: const Text("Flutter Dersleri"),
+        backgroundColor: Colors.cyan,
       ),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start, // ÜSTE YAPIŞTIR
+
+
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // SOL COLUMN (DERSLERI)
-          Column(
-            children: dersLetters.map((letter) {
-              return Container(
-                width: 95,
-                height: 95,
-                margin: const EdgeInsets.all(1), // 
-                color: Colors.orange,
-                child: Center(
-                  child: Text(
-                    letter,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              box("A"),
+              box("R"),
+              box("T"),
+            ],
           ),
 
-          // SAĞ TARAF
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // sola yasla
-              children: [
-                // ÜST ROW (DART)
-                Row(
-                  children: dartLetters.map((letter) {
-                    return Container(
-                      width: 90,
-                      height: 95,
-                      margin: const EdgeInsets.all(2),
-                      color: Colors.orange,
-                      child: Center(
-                        child: Text(
-                          letter,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-
-                // BOŞ ALAN
-                const Expanded(child: SizedBox()),
-              ],
-            ),
+          
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              box("D"),
+              box("E"),
+              box("R"),
+              box("S"),
+              box("L"),
+              box("E"),
+              box("R"),
+              box("İ"),
+            ],
           ),
         ],
       ),

@@ -1,0 +1,18 @@
+import 'package:flutter/material.dart';
+import 'package:uygulama2_ders/CardveListileKullanimi.dart';
+import 'package:uygulama2_ders/listViewKullanimi.dart';
+
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Material App',
+      home: Listviewkullanimi(),
+    );
+  }
+}

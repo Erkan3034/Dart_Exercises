@@ -6,9 +6,9 @@ class ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Contact Page'),
-        backgroundColor: const Color.fromARGB(255, 129, 163, 191),
+      backgroundColor: Colors.pink,
+      body: const Center(
+        child: Text('Welcome to the Contact Page!'),
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/data/database.dart';
 import 'package:todo_app/utilities/dialog_box.dart';
 import 'package:todo_app/utilities/todo_tile.dart';
 
@@ -11,28 +13,46 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  // reference the hive box
+  final _myBox = Hive.box('mybox');
+  ToDoDatabase db = ToDoDatabase();
+  @override
+  void initState() {
+    // if this is the 1st time ever opening this app, then create default data
+    if(_myBox.get("TODOLIST") == null) {
+      db.createInitialData();
+    } else {
+      // there already exists data
+      db.loadData();
+    }
+    super.initState();
+  }
+
   //text controller
   final _controller = TextEditingController();
 
-  //list of to do tasks
-    List toDoList = [
-      ["Make Tutorial", false],
-      ["Do Exercise", false],
-    ];
-
+  
 
     void checkBoxChanged(bool? value, int index) {
       setState(() {
-        toDoList[index][1] = value;
+        db.toDoList[index][1] = value;
       });
+      db.updateDataBase();
     }
-
+     void saveNewTask() {
+    setState(() {
+      db.toDoList.add([_controller.text, false]);
+      _controller.clear(); //clear text field after adding task
+    });
+    db.updateDataBase();
+    Navigator.of(context).pop(); //close dialog
+  }
     void _createNewTask() {
       showDialog(
         context: context, 
         builder: (context) {
           return DialogBox(
-            my_controller: TextEditingController(),
+            my_controller: _controller,
             onSave: saveNewTask,
             onCancel: () {
               Navigator.of(context).pop(); //close dialog
@@ -40,7 +60,17 @@ class _HomePageState extends State<HomePage> {
           );
         }
         );
+    } 
+
+//delete task
+    void deleteTask(int index){
+      setState(() {
+        db.toDoList.removeAt(index);
+      });
+      db.updateDataBase();
     }
+    
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,25 +87,21 @@ class _HomePageState extends State<HomePage> {
       ),
 
       body: ListView.builder(
-        itemCount: toDoList.length,
+        itemCount: db.toDoList.length,
         itemBuilder: (context, index) {
           return ToDoTile(
-            taskName: toDoList[index][0],
-            taskCompleted: toDoList[index][1],
+            taskName: db.toDoList[index][0],
+            taskCompleted: db.toDoList[index][1],
 
             onChanged: (valueOfCheckbox) { //checkboxa tıklandığında ne olacak
               checkBoxChanged(valueOfCheckbox, index);
             },
+            deleteFunction: (context) =>deleteTask(index),
           );
         },
       ),
     );
   }
 
-  void saveNewTask() {
-    setState(() {
-      toDoList.add([_controller.text, false]);
-    });
-    Navigator.of(context).pop(); //close dialog
-  }
+
 }

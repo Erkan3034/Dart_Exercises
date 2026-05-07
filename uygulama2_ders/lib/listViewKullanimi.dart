@@ -3,18 +3,33 @@ import 'package:flutter/material.dart';
 class Listviewkullanimi extends StatelessWidget {
    Listviewkullanimi({Key? key}) : super(key: key);
 
+  final items = [
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+    BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
+    BottomNavigationBarItem(icon: Icon(Icons.contact_mail), label: "Contact"),
+    BottomNavigationBarItem(icon: Icon(Icons.countertops), label: "Counter"),
+    BottomNavigationBarItem(icon: Icon(Icons.list), label: "To Do"),
+  ];
   List<Ogrenci> tumOgrenciler = List.generate(
     500,
-    (index) => Ogrenci(index + 1, "Ogrenci Adı : ${index + 1}", "Ogrenci Soyadı : ${index + 1}"),
+    (index) => Ogrenci(index + 1, "Öğrenci Adı : ${index + 1}", "Öğrenci Soyadı : ${index + 1}"),
   );
 
+  final _selectedIndex = 0;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ogrenci Listesi"),
+        title: Text("Öğrenci Listesi"),
         backgroundColor: Color.fromARGB(255, 3, 134, 182),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: items, 
+        backgroundColor: Color.fromARGB(255, 3, 134, 182), 
+        selectedItemColor: const Color.fromARGB(255, 137, 93, 93),
+         unselectedItemColor: const Color.fromARGB(135, 50, 57, 35) 
+         ),
       body: ListView.separated(
         itemBuilder: (BuildContext context, int index) {
           var oAnkiOgrenci = tumOgrenciler[index];
@@ -32,7 +47,7 @@ class Listviewkullanimi extends StatelessWidget {
           );
         },
         itemCount: tumOgrenciler.length,
-        separatorBuilder: (context, index) {
+        separatorBuilder: (context, index) { // her 4 elemandan sonra bir divider ekler
           if ((index + 1) % 4 == 0) {
             return Divider(
               color: Colors.green[400],

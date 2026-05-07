@@ -36,17 +36,22 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
               ),
           Expanded(// Expanded widgeti, Columnun geri kalan alanini kaplamasini saglar
             flex: 1,
-            child: OrtalamaGoster(ortalama: 5, dersSayisi: 4), // OrtalamaGoster widgeti, ortalama ve ders sayisi bilgilerini gosterir, bu bilgileri parametre olarak alir
+            child: OrtalamaGoster(ortalama: DataHelper.ortalamaHesapla(), dersSayisi: DataHelper.tumEklenenDersler.length), // OrtalamaGoster widgeti, ortalama ve ders sayisi bilgilerini gosterir, bu bilgileri parametre olarak alir
           ),
   ],
           ),
 
+
           Expanded(child: Container(
             color:  const Color.fromARGB(255, 196, 213, 214),
-            child: ListView.builder(
-              itemCount: DataHelper.tumEklenenDersler.length, // ListView.builderin itemCount parametresi, ListViewde kac tane eleman olacagini belirler, bu deger DataHelper sinifinin tumEklenenDersler listesinin uzunlugu kadar olmalidir cunku bu liste eklenen dersleri tutar
-              itemBuilder: (context, index){ // ListView.builderin itemBuilder parametresi, ListViewdeki her bir eleman icin cagrilir, bu fonksiyonun iki parametresi vardir, context ve index, context widgetin bulundugu konumu belirtir, index ise o anki elemanin indexini belirtir
-                var oAnkiDers = DataHelper.tumEklenenDersler[index]; // oAnkiDers degiskeni, o anki elemanin bilgilerini tutar, bu bilgiler DataHelper sinifinin tumEklenenDersler listesinden index ile alinir
+            child: ListView.separated(
+              itemCount: DataHelper.tumEklenenDersler.length, // ders sayisi
+              separatorBuilder: (context, index) => Divider(
+                color: Sabitler.anaRenk, // bölmecinin rengi
+                thickness: 1.5, // bölmecinin kalınlığı
+              ), // her eleman arasina bölmeci ekler
+              itemBuilder: (context, index){ // contex -> konum. index -> o anki elemanin index
+                var oAnkiDers = DataHelper.tumEklenenDersler[index]; 
                 return _buildListTile(oAnkiDers); // _buildListTile fonksiyonu, o anki dersin bilgilerini gosterir, bu fonksiyonun parametresi oAnkiDers degiskenidir
               },
             ),
@@ -77,6 +82,7 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
       );
   }
   
+  // ignore: strict_top_level_inference
   _buildTextFormField() {
 
     return TextFormField(
@@ -104,7 +110,7 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
      
   }
   
-  _buildHarfler() {
+  Container _buildHarfler() {
       
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -134,7 +140,7 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
     );
   }
   
-  _buildKrediler() {
+  Container _buildKrediler() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -165,9 +171,9 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
 
   void _dersEkleVeOrtalamaHesapla() {
 
-    if(formkey!.currentState!.validate()){ // formkeynin currentStateinin validate fonksiyonu, formun gecerli olup olmadigini kontrol eder, eger form gecerliyse true degerini dondurur
-     formkey!.currentState!.save(); // formkeynin currentStateinin save fonksiyonu, formun onSaved fonksiyonunu cagirir, bu sayede formdaki textFormFieldlerin onSaved fonksiyonlari cagrilir ve bu fonksiyonlarda textFormFieldlerin girdigi degerler alinir
-     formkey!.currentState!.reset(); // formkeynin currentStateinin reset fonksiyonu, formu resetler, bu sayede formdaki textFormFieldlerin girdigi degerler temizlenir ve form tekrar bos hale gelir
+    if(formkey.currentState!.validate()){ // formkeynin currentStateinin validate fonksiyonu, formun gecerli olup olmadigini kontrol eder, eger form gecerliyse true degerini dondurur
+     formkey.currentState!.save(); // formkeynin currentStateinin save fonksiyonu, formun onSaved fonksiyonunu cagirir, bu sayede formdaki textFormFieldlerin onSaved fonksiyonlari cagrilir ve bu fonksiyonlarda textFormFieldlerin girdigi degerler alinir
+     formkey.currentState!.reset(); // formkeynin currentStateinin reset fonksiyonu, formu resetler, bu sayede formdaki textFormFieldlerin girdigi degerler temizlenir ve form tekrar bos hale gelir
      var eklenecekDers = Ders(
       ad: girilenDersAdi, 
       harfDegeri: secilendeger,
@@ -179,7 +185,7 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
     }
   }
 
-  _buildListTile(Ders oAnkiDers) {
+   ListTile _buildListTile(Ders oAnkiDers) {
     return ListTile(
       
       title: Text(oAnkiDers.ad , style: TextStyle(color: const Color.fromARGB(255, 2, 99, 18), fontSize: 20, fontWeight: FontWeight.bold), ),

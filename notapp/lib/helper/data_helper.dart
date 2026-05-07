@@ -1,5 +1,8 @@
 import 'package:notapp/model/ders.dart';
 
+/*
+ Ders listesini tutan ve yeni dersleri ekleyen, ortalama hesaplayan sınıfimiz
+ */
 class DataHelper {
   static List<Ders> tumEklenenDersler = [];
 

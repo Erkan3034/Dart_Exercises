@@ -1,3 +1,7 @@
+/*
+  Ders sınıfı, derslerin adını, harf değerini ve kredi değerini tutan bir model sınıfı 
+  */
+
 class Ders {
   final String ad;
   final double harfDegeri;

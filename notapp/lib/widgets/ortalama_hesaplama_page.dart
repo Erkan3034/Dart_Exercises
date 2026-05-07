@@ -36,8 +36,20 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
               ),
           Expanded(// Expanded widgeti, Columnun geri kalan alanini kaplamasini saglar
             flex: 1,
-            child: OrtalamaGoster(ortalama: DataHelper.ortalamaHesapla(), dersSayisi: DataHelper.tumEklenenDersler.length), // OrtalamaGoster widgeti, ortalama ve ders sayisi bilgilerini gosterir, bu bilgileri parametre olarak alir
+            child: Container(
+              padding: EdgeInsets.all(12), // Containerin icine bosluk eklemek icin kullanilir
+              height: 120,
+              decoration: BoxDecoration(
+                color: Sabitler.anaRenk.shade100,
+                borderRadius: Sabitler.borderRadius,
+              ), // OrtalamaGoster widgeti, ortalama ve ders sayisi bilgilerini gosterir, bu bilgileri parametre olarak alir
+              child: OrtalamaGoster(
+                ortalama: DataHelper.ortalamaHesapla(),
+                dersSayisi: DataHelper.tumEklenenDersler.length,
+              ),
+            ),
           ),
+           
   ],
           ),
 

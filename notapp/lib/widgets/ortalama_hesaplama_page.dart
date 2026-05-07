@@ -178,4 +178,12 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
       print("Ortalama: ${DataHelper.ortalamaHesapla()}"); // eklenen dersin bilgileri konsola yazdirilir
     }
   }
+
+  _buildListTile(Ders oAnkiDers) {
+    return ListTile(
+      
+      title: Text(oAnkiDers.ad , style: TextStyle(color: const Color.fromARGB(255, 2, 99, 18), fontSize: 20, fontWeight: FontWeight.bold), ),
+      subtitle: Text("${oAnkiDers.krediDegeri} kredi, ${oAnkiDers.harfDegeri} not"), 
+    );
+  }
 }

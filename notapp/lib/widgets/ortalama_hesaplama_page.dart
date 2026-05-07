@@ -3,6 +3,10 @@ import 'package:notapp/constants/app_constants.dart';
 import 'package:notapp/helper/data_helper.dart';
 import 'package:notapp/model/ders.dart';
 import 'package:notapp/widgets/ortalama_goster.dart';
+import 'package:notapp/widgets/common/custom_card.dart';
+import 'package:notapp/widgets/common/custom_button.dart';
+import 'package:notapp/widgets/common/empty_state.dart';
+import 'package:notapp/widgets/common/grade_chip.dart';
 
 class OrtalamaHesaplamaPage extends StatefulWidget {
   const OrtalamaHesaplamaPage({super.key});
@@ -12,196 +16,301 @@ class OrtalamaHesaplamaPage extends StatefulWidget {
 }
 
 class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
-  var  formkey = GlobalKey<FormState>(); // formun gecerli olup olmadigini kontrol etmek ve formdaki textFormFieldlerin girdigi degerleri almak icin kullanilir, formkeynin tipi GlobalKey<FormState> olmalidir cunku bu sayede formun gecerli olup olmadigini kontrol edebiliriz ve formdaki textFormFieldlerin girdigi degerleri alabiliriz
-  double secilendeger = 4; // DropdownButtonun secilen degerini tutar, bu degerin tipi double olmalidir cunku DropdownMenuItemlerin value degeri double tipindedir
-  int krediDegeri = 1; // DropdownButtonun secilen degerini tutar, bu degerin tipi int olmalidir cunku DropdownMenuItemlerin value degeri int tipindedir
-  String girilenDersAdi = ""; // TextFormFieldin girdigi degeri tutar, bu degerin tipi String olmalidir cunku TextFormFieldin onSaved fonksiyonu String tipinde bir deger alir
+  var formkey = GlobalKey<FormState>();
+  double secilendeger = 4;
+  int krediDegeri = 1;
+  String girilenDersAdi = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
-        title:  Center(child: Text(Sabitler.baslikText, style: TextStyle(color: Colors.white , fontSize: 25, fontWeight: FontWeight.bold  ),)),
-      ), //AppBar
-
+        title: Text(Sabitler.baslikText),
+      ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch, // Columnun icindeki widgetlarin genisligini ekrana yaymak icin kullanilir
         children: [
-          SizedBox(height: 5,), // SizedBox, widgetlar arasina bosluk eklemek icin kullanilir
-          Row(
-            children: [
-              Expanded(
-                flex: 2, // Expanded widgeti, Rowun geri kalan alanini kaplamasini saglar, flex degeri ise bu alanin ne kadar kaplanacagini belirler
-                child: _buildForm(),
-              ),
-          Expanded(// Expanded widgeti, Columnun geri kalan alanini kaplamasini saglar
-            flex: 1,
-            child: Container(
-              padding: EdgeInsets.all(12), // Containerin icine bosluk eklemek icin kullanilir
-              height: 120,
-              decoration: BoxDecoration(
-                color: Sabitler.anaRenk.shade100,
-                borderRadius: Sabitler.borderRadius,
-              ), // OrtalamaGoster widgeti, ortalama ve ders sayisi bilgilerini gosterir, bu bilgileri parametre olarak alir
-              child: OrtalamaGoster(
-                ortalama: DataHelper.ortalamaHesapla(),
-                dersSayisi: DataHelper.tumEklenenDersler.length,
-              ),
+          // Form ve Ortalama Alanı
+          Padding(
+            padding: EdgeInsets.all(Sabitler.paddingMedium),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: _buildForm(),
+                ),
+                SizedBox(width: Sabitler.paddingMedium),
+                Expanded(
+                  flex: 1,
+                  child: OrtalamaGoster(
+                    ortalama: DataHelper.ortalamaHesapla(),
+                    dersSayisi: DataHelper.tumEklenenDersler.length,
+                  ),
+                ),
+              ],
             ),
           ),
-           
-  ],
+
+          // Ders Listesi
+          Expanded(
+            child: _buildDersList(),
           ),
-
-
-          Expanded(child: Container(
-            color:  const Color.fromARGB(255, 196, 213, 214),
-            child: ListView.separated(
-              itemCount: DataHelper.tumEklenenDersler.length, // ders sayisi
-              separatorBuilder: (context, index) => Divider(
-                color: Sabitler.anaRenk, // bölmecinin rengi
-                thickness: 1.5, // bölmecinin kalınlığı
-              ), // her eleman arasina bölmeci ekler
-              itemBuilder: (context, index){ // contex -> konum. index -> o anki elemanin index
-                var oAnkiDers = DataHelper.tumEklenenDersler[index]; 
-                return _buildListTile(oAnkiDers); // _buildListTile fonksiyonu, o anki dersin bilgilerini gosterir, bu fonksiyonun parametresi oAnkiDers degiskenidir
-              },
-            ),
-          ),)
         ],
-      )
+      ),
     );
   }
-  
+
   Widget _buildForm() {
     return Form(
-      key : formkey,
+      key: formkey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // Ders Adı Input
           _buildTextFormField(),
-          SizedBox(height: 5,),
+          SizedBox(height: Sabitler.paddingMedium),
+
+          // Notlar ve Kredi
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildHarfler(),
-              _buildKrediler(),
-              IconButton(onPressed: _dersEkleVeOrtalamaHesapla, 
-              icon: Icon(Icons.arrow_forward_ios_sharp)),
+              Expanded(child: _buildHarfler()),
+              SizedBox(width: Sabitler.paddingSmall),
+              Expanded(child: _buildKrediler()),
             ],
-          )
+          ),
+          SizedBox(height: Sabitler.paddingMedium),
+
+          // Ekle Butonu
+          CustomButton(
+            label: "EKLE",
+            icon: Icons.add_circle_outline,
+            onPressed: _dersEkleVeOrtalamaHesapla,
+            backgroundColor: Sabitler.anaRenk,
+          ),
         ],
       ),
-      );
+    );
   }
-  
-  // ignore: strict_top_level_inference
-  _buildTextFormField() {
 
+  Widget _buildTextFormField() {
     return TextFormField(
-      
       decoration: InputDecoration(
-        hintText: "Ders Adını Giriniz",
-        border: OutlineInputBorder(borderRadius: Sabitler.borderRadius),
-        filled: true,
-        fillColor: Sabitler.anaRenk.shade100,
-        
+        hintText: Sabitler.dersAdiHint,
+        prefixIcon: Icon(Icons.book),
       ),
-      onSaved: (deger){
+      onSaved: (deger) {
         setState(() {
-          girilenDersAdi = deger!; // TextFormFieldin onSaved fonksiyonu, kullanici texti girdikten sonra bu texti alir ve girilenDersAdi degiskenine atar, setState fonksiyonu ise bu degisiklikten sonra widgetin yeniden cizilmesini saglar
+          girilenDersAdi = deger!;
         });
       },
-      validator: (s){
-        if(s!.isEmpty){ // textFormFieldin validator fonksiyonu, kullanici texti girdikten sonra bu texti kontrol eder, eger text bos ise hata mesajini gosterir
-          return "Ders adını giriniz";
+      validator: (s) {
+        if (s!.isEmpty) {
+          return Sabitler.dersAdiValidasyon;
         } else {
           return null;
         }
       },
-     );
-     
-  }
-  
-  Container _buildHarfler() {
-      
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: Sabitler.anaRenk.shade100,
-        borderRadius: Sabitler.borderRadius,
-      ),
-      child: DropdownButton(
-        value: secilendeger,
-        onChanged: (deger){
-          setState(() {
-            secilendeger = deger!.toDouble(); // DropdownButtonun onChanged fonksiyonu, secilen degeri alir ve bu degeri secilendeger degiskenine atar, setState fonksiyonu ise bu degisiklikten sonra widgetin yeniden cizilmesini saglar
-          });
-        },
-        items:[
-          DropdownMenuItem(child: Text("AA"), value: 4),
-          DropdownMenuItem(child: Text("BA"), value: 3.5),
-          DropdownMenuItem(child: Text("BB"), value: 3),
-          DropdownMenuItem(child: Text("CB"), value: 2.5),
-          DropdownMenuItem(child: Text("CC"), value: 2),
-          DropdownMenuItem(child: Text("DC"), value: 1.5),
-          DropdownMenuItem(child: Text("DD"), value: 1),
-          DropdownMenuItem(child: Text("FF"), value: 0),
-        ]
-        
-        ),
     );
   }
-  
-  Container _buildKrediler() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: Sabitler.anaRenk.shade100,
-        borderRadius: Sabitler.borderRadius,
+
+  Widget _buildHarfler() {
+    return CustomCard(
+      padding: EdgeInsets.symmetric(
+        horizontal: Sabitler.paddingSmall,
+        vertical: Sabitler.paddingSmall,
       ),
-      child: DropdownButton(
+      child: DropdownButtonFormField<double>(
+        value: secilendeger,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
+          border: InputBorder.none,
+          labelText: "Not",
+          labelStyle: TextStyle(fontSize: Sabitler.smallFontSize),
+        ),
+        onChanged: (deger) {
+          setState(() {
+            secilendeger = deger!;
+          });
+        },
+        items: [
+          DropdownMenuItem(child: Text("AA"), value: 4.0),
+          DropdownMenuItem(child: Text("BA"), value: 3.5),
+          DropdownMenuItem(child: Text("BB"), value: 3.0),
+          DropdownMenuItem(child: Text("CB"), value: 2.5),
+          DropdownMenuItem(child: Text("CC"), value: 2.0),
+          DropdownMenuItem(child: Text("DC"), value: 1.5),
+          DropdownMenuItem(child: Text("DD"), value: 1.0),
+          DropdownMenuItem(child: Text("FF"), value: 0.0),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildKrediler() {
+    return CustomCard(
+      padding: EdgeInsets.symmetric(
+        horizontal: Sabitler.paddingSmall,
+        vertical: Sabitler.paddingSmall,
+      ),
+      child: DropdownButtonFormField<int>(
         value: krediDegeri,
-        onChanged: (deger){
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
+          border: InputBorder.none,
+          labelText: "Kredi",
+          labelStyle: TextStyle(fontSize: Sabitler.smallFontSize),
+        ),
+        onChanged: (deger) {
           setState(() {
             krediDegeri = deger!;
           });
         },
-        items:[
-          DropdownMenuItem(value: 1, child: Text("1")),
-          DropdownMenuItem(value: 2, child: Text("2")),
-          DropdownMenuItem(value: 3, child: Text("3")),
-          DropdownMenuItem(value: 4, child: Text("4")),
-          DropdownMenuItem(value: 5, child: Text("5")),
-          DropdownMenuItem(value: 6, child: Text("6")),
-          DropdownMenuItem(value: 7, child: Text("7")),
-          DropdownMenuItem(value: 8, child: Text("8")),
-        ]
-        
+        items: List.generate(
+          8,
+          (index) => DropdownMenuItem(
+            value: index + 1,
+            child: Text("${index + 1}"),
+          ),
         ),
+      ),
     );
+  }
+
+  Widget _buildDersList() {
+    if (DataHelper.tumEklenenDersler.isEmpty) {
+      return EmptyState(
+        message: Sabitler.bosDersListesi,
+        icon: Icons.class_,
+      );
+    }
+
+    return ListView.builder(
+      padding: EdgeInsets.all(Sabitler.paddingMedium),
+      itemCount: DataHelper.tumEklenenDersler.length,
+      itemBuilder: (context, index) {
+        var oAnkiDers = DataHelper.tumEklenenDersler[index];
+        return _buildDersCard(oAnkiDers, index);
+      },
+    );
+  }
+
+  Widget _buildDersCard(Ders ders, int index) {
+    return Dismissible(
+      key: Key(ders.ad + index.toString()),
+      direction: DismissDirection.endToStart,
+      onDismissed: (direction) {
+        setState(() {
+          DataHelper.tumEklenenDersler.removeAt(index);
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("${ders.ad} silindi"),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      },
+      background: Container(
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.only(right: Sabitler.paddingMedium),
+        decoration: BoxDecoration(
+          color: Sabitler.notFF,
+          borderRadius: Sabitler.borderRadius,
+        ),
+        child: Icon(Icons.delete, color: Sabitler.beyaz),
+      ),
+      child: CustomCard(
+        backgroundColor: Sabitler.beyaz,
+        padding: EdgeInsets.all(Sabitler.paddingMedium),
+        margin: EdgeInsets.only(bottom: Sabitler.paddingSmall),
+        borderColor: Sabitler.getNotRengi(ders.harfDegeri),
+        child: Row(
+          children: [
+            // Renkli gösterge
+            Container(
+              width: 6,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Sabitler.getNotRengi(ders.harfDegeri),
+                borderRadius: BorderRadius.circular(3),
+              ),
+            ),
+            SizedBox(width: Sabitler.paddingMedium),
+
+            // Ders bilgisi
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    ders.ad,
+                    style: Theme.of(context).textTheme.titleMedium,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Icon(Icons.credit_card, size: 14, color: Color(0xFF999999)),
+                      SizedBox(width: 4),
+                      Text(
+                        "${ders.krediDegeri} Kredi",
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            // Not badge'i
+            GradeChip(
+              notDegeri: ders.harfDegeri,
+              notAdi: _getNotAdi(ders.harfDegeri),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _getNotAdi(double notDegeri) {
+    final notMap = {
+      4.0: "AA",
+      3.5: "BA",
+      3.0: "BB",
+      2.5: "CB",
+      2.0: "CC",
+      1.5: "DC",
+      1.0: "DD",
+      0.0: "FF",
+    };
+    return notMap[notDegeri] ?? "?";
   }
 
   void _dersEkleVeOrtalamaHesapla() {
+    if (formkey.currentState!.validate()) {
+      formkey.currentState!.save();
+      formkey.currentState!.reset();
 
-    if(formkey.currentState!.validate()){ // formkeynin currentStateinin validate fonksiyonu, formun gecerli olup olmadigini kontrol eder, eger form gecerliyse true degerini dondurur
-     formkey.currentState!.save(); // formkeynin currentStateinin save fonksiyonu, formun onSaved fonksiyonunu cagirir, bu sayede formdaki textFormFieldlerin onSaved fonksiyonlari cagrilir ve bu fonksiyonlarda textFormFieldlerin girdigi degerler alinir
-     formkey.currentState!.reset(); // formkeynin currentStateinin reset fonksiyonu, formu resetler, bu sayede formdaki textFormFieldlerin girdigi degerler temizlenir ve form tekrar bos hale gelir
-     var eklenecekDers = Ders(
-      ad: girilenDersAdi, 
-      harfDegeri: secilendeger,
-      krediDegeri: krediDegeri);
-      
-      DataHelper.dersEkle(eklenecekDers); // DataHelper sinifinin dersEkle fonksiyonu, eklenen dersi tumEklenenDersler listesine ekler, bu sayede eklenen dersler tutulur ve daha sonra ortalama hesaplama islemi yapilir
-       // Ders sinifindan bir nesne olusturulur, bu nesnenin ad, harfDegeri ve krediDegeri ozellikleri formdan alinan degerlerle doldurulur
-      print("Ortalama: ${DataHelper.ortalamaHesapla()}"); // eklenen dersin bilgileri konsola yazdirilir
+      var eklenecekDers = Ders(
+        ad: girilenDersAdi,
+        harfDegeri: secilendeger,
+        krediDegeri: krediDegeri,
+      );
+
+      setState(() {
+        DataHelper.dersEkle(eklenecekDers);
+      });
+
+      // Feedback
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("${girilenDersAdi} eklendi ✓"),
+          duration: Duration(seconds: 2),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+
+      print("Ortalama: ${DataHelper.ortalamaHesapla()}");
     }
-  }
-
-   ListTile _buildListTile(Ders oAnkiDers) {
-    return ListTile(
-      
-      title: Text(oAnkiDers.ad , style: TextStyle(color: const Color.fromARGB(255, 2, 99, 18), fontSize: 20, fontWeight: FontWeight.bold), ),
-      subtitle: Text("${oAnkiDers.krediDegeri} kredi, ${oAnkiDers.harfDegeri} not"), 
-    );
   }
 }

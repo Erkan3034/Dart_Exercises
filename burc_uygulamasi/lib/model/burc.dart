@@ -1,10 +1,11 @@
+// bu classı burçların özelliklerini tutmak için olusturduk. Burçların adı, tarihleri, detayları gibi bilfileri içerir.
+
 class Burc {
   final String _burcAdi;
   final String _burcTarihi;
   final String _burcDetayi;
   final String _burcKucukResim;
   final String _burcBuyukResim;
-
 
   Burc( //constructor
       this._burcAdi,

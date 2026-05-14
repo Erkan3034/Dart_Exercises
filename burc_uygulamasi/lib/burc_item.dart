@@ -13,7 +13,6 @@ class BurcItem  extends StatelessWidget {
       child: Card(
         elevation: 4,
         child: ListTile(
-          
           leading: Image.asset("images/${listelenenBurc.burcKucukResim}"),
           title: Text(listelenenBurc.burcAdi),
           subtitle: Text(listelenenBurc.burcTarihi),

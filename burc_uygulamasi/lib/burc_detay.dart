@@ -23,8 +23,8 @@ class BurcDetay extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: 10),
                 Image.asset("images/${secilenBurc.burcBuyukResim}"),
-
                 SizedBox(height: 12),
                 Text(secilenBurc.burcAdi, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
                 SizedBox(height: 6),
@@ -47,7 +47,12 @@ class BurcDetay extends StatelessWidget {
                     ],
 
                   ),
-                  child: Text(secilenBurc.burcDetayi, style: TextStyle(fontSize: 16 , height: 1.5), textAlign: TextAlign.center,)),
+                  child: Text(
+                    secilenBurc.burcDetayi,
+                    style: TextStyle(fontSize: 16 , height: 1.5), 
+                    textAlign: TextAlign.center,
+                    )
+                  ),
               ],
 
 

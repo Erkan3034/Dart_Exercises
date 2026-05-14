@@ -54,13 +54,13 @@ class BurcListesi extends StatelessWidget {
   List<Burc> veriKaynaginiHazirla() {
     List<Burc> gecici = [];
     for (int i = 0; i < Strings.BURC_ADLARI.length; i++) {
-      var burcAdi = Strings.BURC_ADLARI[i];
+      var burcAdi = Strings.BURC_ADLARI_GORUNEN[i];
       var burcTarihi = Strings.BURC_TARIHLERI[i];
       var burcDetayi = Strings.BURC_GENEL_OZELLIKLERI[i];
 
-      var burcKucukResim =
+        var burcKucukResim =
           ("${Strings.BURC_ADLARI[i].toLowerCase()}${i + 1}.png");
-      var burcBuyukResim =
+        var burcBuyukResim =
           ("${Strings.BURC_ADLARI[i].toLowerCase()}_buyuk${i + 1}.png");
 
       Burc eklenecekBurc = Burc(

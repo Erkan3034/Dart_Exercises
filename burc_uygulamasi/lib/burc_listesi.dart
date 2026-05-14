@@ -1,14 +1,47 @@
 import 'package:burc_uygulamasi/data/strings.dart';
 import 'package:burc_uygulamasi/model/burc.dart';
+import 'package:burc_uygulamasi/zodiac_card_widget.dart';
+import 'package:burc_uygulamasi/burc_detay.dart';
 import 'package:flutter/material.dart';
-import 'package:burc_uygulamasi/burc_item.dart';
 
-class BurcListesi extends StatelessWidget {
-  late List<Burc> tumBurclar; //late : sonradan deger atanacak demek
+class BurcListesi extends StatefulWidget {
+  const BurcListesi({super.key});
 
-  BurcListesi({super.key}) {
+  @override
+  State<BurcListesi> createState() => _BurcListesiState();
+}
+
+class _BurcListesiState extends State<BurcListesi> {
+  late List<Burc> tumBurclar;
+  late List<Burc> filtrelenmisler;
+  late TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
     tumBurclar = veriKaynaginiHazirla();
-    print(tumBurclar);
+    filtrelenmisler = tumBurclar;
+    _searchController = TextEditingController();
+    _searchController.addListener(_filtrele);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filtrele() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      if (query.isEmpty) {
+        filtrelenmisler = tumBurclar;
+      } else {
+        filtrelenmisler = tumBurclar
+            .where((burc) => burc.burcAdi.toLowerCase().contains(query))
+            .toList();
+      }
+    });
   }
 
   @override
@@ -16,37 +49,71 @@ class BurcListesi extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Burç Listesi",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          "Burç Rehberi",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.pink,
-        actions: [
-          IconButton(
-            onPressed: () {
-              tumBurclar = veriKaynaginiHazirla();
-            },
-            icon: Icon(Icons.refresh, color: Colors.white),
+        elevation: 0,
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Burç ara...',
+                prefixIcon: Icon(Icons.search),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                        },
+                      )
+                    : null,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
           ),
-          IconButton(
-            onPressed: () {
-              tumBurclar.shuffle();
-              showCustomDialog(context);
-            },
-            icon: Icon(Icons.shuffle, color: Colors.white),
+          Expanded(
+            child: filtrelenmisler.isEmpty
+                ? Center(
+                    child: Text('Burç bulunamadı'),
+                  )
+                : GridView.builder(
+                    padding: EdgeInsets.all(16),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                      childAspectRatio: 0.9,
+                    ),
+                    itemCount: filtrelenmisler.length,
+                    itemBuilder: (context, index) {
+                      final burc = filtrelenmisler[index];
+                      return ZodiacCard(
+                        burcAdi: burc.burcAdi,
+                        burcTarihi: burc.burcTarihi,
+                        resim: 'images/${burc.burcKucukResim}',
+                        colorKey: burc.colorKey,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BurcDetay(
+                                secilenBurc: burc,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
           ),
         ],
-      ),
-
-      body: Center(
-        child: ListView.builder(
-          itemCount: tumBurclar.length,
-          itemBuilder: (context, index) {
-            //index : o anki elemanin indexi , ccontext : o anki yapinin contexti
-            return BurcItem(listelenenBurc: tumBurclar[index]);
-          },
-          scrollDirection: Axis.vertical,
-        ),
       ),
     );
   }
@@ -57,10 +124,11 @@ class BurcListesi extends StatelessWidget {
       var burcAdi = Strings.BURC_ADLARI_GORUNEN[i];
       var burcTarihi = Strings.BURC_TARIHLERI[i];
       var burcDetayi = Strings.BURC_GENEL_OZELLIKLERI[i];
+      var colorKey = Strings.BURC_RENK_KEYLERI[i];
 
-        var burcKucukResim =
+      var burcKucukResim =
           ("${Strings.BURC_ADLARI[i].toLowerCase()}${i + 1}.png");
-        var burcBuyukResim =
+      var burcBuyukResim =
           ("${Strings.BURC_ADLARI[i].toLowerCase()}_buyuk${i + 1}.png");
 
       Burc eklenecekBurc = Burc(
@@ -69,29 +137,10 @@ class BurcListesi extends StatelessWidget {
         burcDetayi,
         burcKucukResim,
         burcBuyukResim,
+        colorKey,
       );
       gecici.add(eklenecekBurc);
     }
     return gecici;
   }
-}
-
-void showCustomDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: Text("Burçlar Karıştı"),
-        content: Text("Burçlar karıştırıldı ve yeni sıralama oluşturuldu."),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text("Tamam"),
-          ),
-        ],
-      );
-    },
-  );
 }

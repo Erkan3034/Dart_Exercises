@@ -17,6 +17,22 @@ class Strings {
     "BALIK"
   ];
 
+  // Renk key'leri (zodiac_colors.dart ile eşleşmelidir)
+  static const List<String> BURC_RENK_KEYLERI = [
+    "koc",
+    "boga",
+    "ikizler",
+    "yengec",
+    "aslan",
+    "basak",
+    "terazi",
+    "akrep",
+    "yay",
+    "oglak",
+    "kova",
+    "balik"
+  ];
+
   // Kullanıcıya gösterilecek metinler (Türkçe karakterli)
   static const List<String> BURC_ADLARI_GORUNEN = [
     "Koç",

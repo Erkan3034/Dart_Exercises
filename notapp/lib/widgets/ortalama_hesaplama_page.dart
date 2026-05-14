@@ -119,7 +119,7 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
         vertical: Sabitler.paddingSmall,
       ),
       child: DropdownButtonFormField<double>(
-        value: secilendeger,
+        initialValue: secilendeger,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.zero,
           border: InputBorder.none,
@@ -132,14 +132,14 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
           });
         },
         items: [
-          DropdownMenuItem(child: Text("AA"), value: 4.0),
-          DropdownMenuItem(child: Text("BA"), value: 3.5),
-          DropdownMenuItem(child: Text("BB"), value: 3.0),
-          DropdownMenuItem(child: Text("CB"), value: 2.5),
-          DropdownMenuItem(child: Text("CC"), value: 2.0),
-          DropdownMenuItem(child: Text("DC"), value: 1.5),
-          DropdownMenuItem(child: Text("DD"), value: 1.0),
-          DropdownMenuItem(child: Text("FF"), value: 0.0),
+          DropdownMenuItem(value: 4.0, child: Text("AA")),
+          DropdownMenuItem(value: 3.5, child: Text("BA")),
+          DropdownMenuItem(value: 3.0, child: Text("BB")),
+          DropdownMenuItem(value: 2.5, child: Text("CB")),
+          DropdownMenuItem(value: 2.0, child: Text("CC")),
+          DropdownMenuItem(value: 1.5, child: Text("DC")),
+          DropdownMenuItem(value: 1.0, child: Text("DD")),
+          DropdownMenuItem(value: 0.0, child: Text("FF")),
         ],
       ),
     );
@@ -152,7 +152,7 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
         vertical: Sabitler.paddingSmall,
       ),
       child: DropdownButtonFormField<int>(
-        value: krediDegeri,
+        initialValue: krediDegeri,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.zero,
           border: InputBorder.none,
@@ -304,7 +304,7 @@ class OrtalamaHesaplamaPageState extends State<OrtalamaHesaplamaPage> {
       // Feedback
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("${girilenDersAdi} eklendi ✓"),
+          content: Text("$girilenDersAdi eklendi ✓"),
           duration: Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,
         ),

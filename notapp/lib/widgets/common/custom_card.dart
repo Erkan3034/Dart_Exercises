@@ -11,7 +11,7 @@ class CustomCard extends StatelessWidget {
   final Color borderColor;
 
   const CustomCard({
-    Key? key,
+    super.key,
     required this.child,
     this.backgroundColor,
     this.elevation,
@@ -19,7 +19,7 @@ class CustomCard extends StatelessWidget {
     this.margin,
     this.onTap,
     this.borderColor = Sabitler.gri,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

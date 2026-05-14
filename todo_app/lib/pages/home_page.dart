@@ -256,7 +256,7 @@ class _HomePageState extends State<HomePage> {
 class StatsPanel extends StatelessWidget {
   final ToDoDatabase db;
 
-  const StatsPanel({Key? key, required this.db}) : super(key: key);
+  const StatsPanel({super.key, required this.db});
 
   @override
   Widget build(BuildContext context) {

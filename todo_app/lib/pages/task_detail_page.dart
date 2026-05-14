@@ -9,10 +9,10 @@ class TaskDetailPage extends StatefulWidget {
   final ToDoDatabase db;
 
   const TaskDetailPage({
-    Key? key,
+    super.key,
     this.task,
     required this.db,
-  }) : super(key: key);
+  });
 
   @override
   State<TaskDetailPage> createState() => _TaskDetailPageState();

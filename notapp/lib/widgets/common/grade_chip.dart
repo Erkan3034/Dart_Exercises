@@ -6,10 +6,10 @@ class GradeChip extends StatelessWidget {
   final String notAdi;
 
   const GradeChip({
-    Key? key,
+    super.key,
     required this.notDegeri,
     required this.notAdi,
-  }) : super(key: key);
+  });
 
   Color _getColor() {
     return Sabitler.getNotRengi(notDegeri);

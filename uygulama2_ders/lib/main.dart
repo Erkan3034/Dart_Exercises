@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uygulama2_ders/CardveListileKullanimi.dart';
 import 'package:uygulama2_ders/listViewKullanimi.dart';
 
 

@@ -6,10 +6,10 @@ class SearchBar extends StatefulWidget {
   final VoidCallback onClear;
 
   const SearchBar({
-    Key? key,
+    super.key,
     required this.onSearch,
     required this.onClear,
-  }) : super(key: key);
+  });
 
   @override
   State<SearchBar> createState() => _SearchBarState();

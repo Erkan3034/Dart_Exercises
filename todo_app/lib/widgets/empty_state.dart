@@ -7,11 +7,11 @@ class EmptyState extends StatelessWidget {
   final IconData icon;
 
   const EmptyState({
-    Key? key,
+    super.key,
     required this.message,
     this.subtitle,
     this.icon = Icons.task_alt,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CardveListileKullanimi extends StatelessWidget {
-  const CardveListileKullanimi({ Key?  key}) : super(key: key);
+  const CardveListileKullanimi({ super.key});
 
   @override
   Widget build(BuildContext context) {

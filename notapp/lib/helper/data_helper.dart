@@ -7,7 +7,7 @@ class DataHelper {
   static List<Ders> tumEklenenDersler = [];
 
 
-  static dersEkle(Ders ders){
+  static void dersEkle(Ders ders){
     tumEklenenDersler.add(ders);
   }
 
@@ -15,10 +15,10 @@ class DataHelper {
     double toplamNot = 0;
     double toplamKredi = 0;
 
-    tumEklenenDersler.forEach((ders) {
+    for (var ders in tumEklenenDersler) {
       toplamNot += (ders.harfDegeri * ders.krediDegeri);
       toplamKredi += ders.krediDegeri;
-    });
+    }
     if(toplamKredi == 0){
       return 0;
     }

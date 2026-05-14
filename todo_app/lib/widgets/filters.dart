@@ -6,9 +6,9 @@ class CategoryFilter extends StatefulWidget {
   final Function(TaskCategory?) onCategorySelected;
 
   const CategoryFilter({
-    Key? key,
+    super.key,
     required this.onCategorySelected,
-  }) : super(key: key);
+  });
 
   @override
   State<CategoryFilter> createState() => _CategoryFilterState();
@@ -91,9 +91,9 @@ class PriorityFilter extends StatefulWidget {
   final Function(TaskPriority?) onPrioritySelected;
 
   const PriorityFilter({
-    Key? key,
+    super.key,
     required this.onPrioritySelected,
-  }) : super(key: key);
+  });
 
   @override
   State<PriorityFilter> createState() => _PriorityFilterState();

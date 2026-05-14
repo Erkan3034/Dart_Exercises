@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Listviewkullanimi extends StatelessWidget {
-   Listviewkullanimi({Key? key}) : super(key: key);
+   Listviewkullanimi({super.key});
 
   final items = [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),

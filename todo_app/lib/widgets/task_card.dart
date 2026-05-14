@@ -11,14 +11,14 @@ class TaskCard extends StatelessWidget {
   final Task? fullTask;
 
   const TaskCard({
-    Key? key,
+    super.key,
     required this.taskName,
     required this.isCompleted,
     this.onChanged,
     this.onDelete,
     this.onEdit,
     this.fullTask,
-  }) : super(key: key);
+  });
 
   Color _getPriorityColor() {
     if (fullTask == null) return TodoConstants.accentColor;

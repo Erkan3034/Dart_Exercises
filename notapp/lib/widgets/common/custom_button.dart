@@ -11,7 +11,7 @@ class CustomButton extends StatelessWidget {
   final bool isSmall;
 
   const CustomButton({
-    Key? key,
+    super.key,
     this.label,
     this.icon,
     required this.onPressed,
@@ -19,7 +19,7 @@ class CustomButton extends StatelessWidget {
     this.foregroundColor,
     this.isLoading = false,
     this.isSmall = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

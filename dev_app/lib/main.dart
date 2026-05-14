@@ -9,7 +9,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+   const MyApp({super.key});
 
 
   @override
@@ -212,9 +212,7 @@ class MyApp extends StatelessWidget {
  */
 
 class _ContainerWidget extends StatelessWidget {
-  const _ContainerWidget({
-    super.key,
-  });
+  const _ContainerWidget();
 
   @override
   Widget build(BuildContext context) {

@@ -9,12 +9,12 @@ class StatsCard extends StatelessWidget {
   final IconData icon;
 
   const StatsCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.value,
     required this.color,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +63,9 @@ class StatisticsPage extends StatelessWidget {
   final ToDoDatabase db;
 
   const StatisticsPage({
-    Key? key,
+    super.key,
     required this.db,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,7 @@ class StatisticsPage extends StatelessWidget {
               ),
               StatsCard(
                 title: 'Tamamlanma %',
-                value: stats['completionRate'].toString() + '%',
+                value: '${stats['completionRate']}%',
                 color: Colors.blue,
                 icon: Icons.trending_up,
               ),
@@ -184,7 +184,7 @@ class StatisticsPage extends StatelessWidget {
                   ),
                 ),
               );
-            }).toList(),
+            }),
           ],
         ],
       ),
